@@ -1,6 +1,6 @@
 pragma solidity ^0.4.24;
 
-contract TestPostman {
+contract TestPostman{
    uint public storedData;
 
    event DataStored (

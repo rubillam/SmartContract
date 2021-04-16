@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+
 public class RequestApiKaleido {
 	
 	public HttpURLConnection getConexionEndpoint(String endpoint, String metodo, int conecttimeout, int readtimeout) throws IOException {

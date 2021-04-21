@@ -441,8 +441,10 @@
     window.onload = function() {
   	  //init();
   	  //obtenerConjuntos();
-	  	const conjunto = window.location.search;
-	  	const contratoid = conjunto.split("=");
+	  	const conjunto = window.location.search;	  	
+	  	const contratoid = conjunto.split("&")[0].split("=");
+	  	const endpoint = conjunto.split("&")[1].split("=");
+	  	
 	  	//alert(parametros[1]);
 	  	//obtenerCompilados(contratoid[1]);
 			
@@ -450,6 +452,7 @@
 	  	var form = document.getElementById('formulario_compilado');
 	  	var div = document.createElement('div');
 	  	div.innerHTML = '<input type="text" name="id_contrato" type="hidden" value="'+ contratoid[1] +'" hidden>';
+	  	div.innerHTML = '<input type="text" name="endpoint" type="hidden" value="'+ endpoint[1] +'" hidden>';
 	  	form.appendChild(div);
 	  	
 	  }; 

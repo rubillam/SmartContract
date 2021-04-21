@@ -56,7 +56,7 @@ function obtenerCompilados(id_conjunto){
     
 }
 
-function obtenerCompilado(id_conjunto, id_compilado, callback){
+function obtenerCompilado(id_conjunto, id_compilado, endpoint, callback){
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET', 'ObtenerCompilados?id-conjunto=' + id_conjunto + '&id_compilado=' + id_compilado, true);
     xhr.send(null); 
@@ -64,7 +64,7 @@ function obtenerCompilado(id_conjunto, id_compilado, callback){
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {            
             returned_data = JSON.parse(xhr.responseText);
-            callback(returned_data);           
+            callback(returned_data, endpoint);           
         }
     }
       
@@ -167,11 +167,11 @@ function append_json_promovido(data){
     data1 = data.gatewayAPIs;   
 	data1.forEach(function(object) {	
 		console.log(data1);		
-		 obtenerCompilado(object.consortiaContractId, object._id, llenarTablaPromovidos);  		              
+		 obtenerCompilado(object.consortiaContractId, object._id, object.endpoint, llenarTablaPromovidos);  		              
     });    
 }
 
-function llenarTablaPromovidos(data){
+function llenarTablaPromovidos(data, endpoint){
 console.log(data);
 		var table = document.getElementById('conjuntos-table');
 	
@@ -182,12 +182,12 @@ console.log(data);
 		'<td>' + data.contract_name + '</td>' +        
 		'<td>' + data.description + '</td>' +
 		'<td>' + data.consortiaContractId + '</td>' +
-		'<td>' + '<button class="btn waves-effect waves-light btn-info btn-outline-info" onclick="verInstancias(\''+ data._id +'\')"><i class="icofont icofont-info-square"></i>Ver Instancias</button>' + '</td>';
+		'<td>' + '<button class="btn waves-effect waves-light btn-info btn-outline-info" onclick="verInstancias(\''+ data._id +'\', \''+ endpoint +'\')"><i class="icofont icofont-info-square"></i>Ver Instancias</button>' + '</td>';
 		table.appendChild(tr);
 }
 
-function verInstancias(x){
-	window.location.href = "Instancias.html?id_compilado=" + x;
+function verInstancias(x, endpoint){
+	window.location.href = "Instancias.html?id_compilado=" + x + "&endpoint=" + endpoint;
 }
 
 function verCompilados(x){

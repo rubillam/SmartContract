@@ -38,7 +38,7 @@ public class CrearInstancia extends HttpServlet {
 		String idContrato = request.getParameter("id_contrato");
 		String nombre_instancia = request.getParameter("nombre_instancia");
 		String propiedad1 = request.getParameter("propiedad1");
-		String endpoint = "contrato1";
+		String endpoint = request.getParameter("endpoint");
 
 		String url = "https://" + datosk.getEnviroment() + "-" + datosk.getNodo() + "-" + datosk.getZona() + ".kaleido.io/gateways/" + endpoint + "/?kld-from=" + datosk.getAccount() + "&kld-sync=true&kld-call=false&kld-register=" + nombre_instancia;
 		System.out.println(url);

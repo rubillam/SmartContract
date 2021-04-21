@@ -306,7 +306,7 @@
                                                         <h5>Crear instancias de contrato</h5>                                                        
                                                     </div>
                                                     <div class="card-block">
-                                                        <form class="form-material" method="post" action="CrearInstancia">
+                                                        <form class="form-material" method="post" action="CrearInstancia" id="formulario_compilado">
                                                             <div class="form-group form-default">
                                                                 <input type="text" name="nombre_instancia" class="form-control">
                                                                 <span class="form-bar"></span>
@@ -450,10 +450,12 @@
 			
 	  	
 	  	var form = document.getElementById('formulario_compilado');
-	  	var div = document.createElement('div');
-	  	div.innerHTML = '<input type="text" name="id_contrato" type="hidden" value="'+ contratoid[1] +'" hidden>';
-	  	div.innerHTML = '<input type="text" name="endpoint" type="hidden" value="'+ endpoint[1] +'" hidden>';
-	  	form.appendChild(div);
+	  	var div1 = document.createElement('div');
+	  	div1.innerHTML = '<input type="text" name="id_contrato" type="hidden" value="'+ contratoid[1] +'" hidden>';
+	  	var div2 = document.createElement('div');
+	  	div2.innerHTML = '<input type="text" name="endpoint" type="hidden" value="'+ endpoint[1] +'" hidden>';
+	  	form.appendChild(div1);
+	  	form.appendChild(div2);
 	  	
 	  }; 
     </script>

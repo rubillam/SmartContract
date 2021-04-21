@@ -300,43 +300,35 @@
                                     <div class="page-body">
                                         <div class="row">
                                             <div class="col-sm-12">
-                                            <!--  
+                                           
                                              <div class="card">
                                                     <div class="card-header">
                                                         <h5>Crear instancias de contrato</h5>                                                        
                                                     </div>
                                                     <div class="card-block">
-                                                        <form class="form-material" method="post" action="CrearConjunto">
+                                                        <form class="form-material" method="post" action="CrearInstancia">
                                                             <div class="form-group form-default">
-                                                                <input type="text" name="nombre-conjunto" class="form-control">
+                                                                <input type="text" name="nombre_instancia" class="form-control">
                                                                 <span class="form-bar"></span>
-                                                                <label class="float-label">Nombre plantilla contrato</label>
+                                                                <label class="float-label">Nombre instancia de contrato</label>
                                                             </div>
-                                                            <div class="form-group form-default">
-                                                                <input type="text" name="descripcion-conjunto" class="form-control">
-                                                                <span class="form-bar"></span>
-                                                                <label class="float-label">Descripción plantilla contrato</label>
-                                                            </div>                                                            
-                                                            <div class="form-group row">
-                                                                <label class="col-sm-2 col-form-label">Tipo compilación</label>
-                                                                <div class="col-sm-10">
-                                                                    <select name="tipo-conjunto" class="form-control">
-                                                                        <option value="opt1">Seleccione un tipo</option>
-                                                                        <option value="github">Github</option>
-                                                                        <option value="precompiled">ABI</option>                                                                        
-                                                                    </select>
-                                                                </div>
-                                                            </div>                                                             
+                                                           
+	                                                        <div class="form-group form-default">
+	                                                            <input type="text" name="propiedad1" class="form-control">
+	                                                            <span class="form-bar"></span>
+	                                                            <label class="float-label">Propiedad: initVal</label>
+	                                                        </div> 
+                                                                                                
+                                                                                                                       
                                                                                                              
                                                            <button class="btn btn-primary waves-effect waves-light" >Crear</button>
-                                                        </form>
-                                                        
+                                                        </form>                                             
                                                         
                                                         
                                                          
                                                     </div>
                                                 </div>
-                                            -->
+                                           
                                             <div class="card">
                                             <div class="card-header">
                                                 <h5>Contratos Promovidos</h5>
@@ -447,9 +439,20 @@
     <script type="text/javascript" src="assets/js/kaleido/app.js"></script>
     <script>
     window.onload = function() {
-    	  //init();
-    	  obtenerPromovidos();
-    	};
+  	  //init();
+  	  //obtenerConjuntos();
+	  	const conjunto = window.location.search;
+	  	const contratoid = conjunto.split("=");
+	  	//alert(parametros[1]);
+	  	//obtenerCompilados(contratoid[1]);
+			
+	  	
+	  	var form = document.getElementById('formulario_compilado');
+	  	var div = document.createElement('div');
+	  	div.innerHTML = '<input type="text" name="id_contrato" type="hidden" value="'+ contratoid[1] +'" hidden>';
+	  	form.appendChild(div);
+	  	
+	  }; 
     </script>
 </body>
 

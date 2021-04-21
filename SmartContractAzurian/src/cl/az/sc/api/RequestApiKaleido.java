@@ -1,17 +1,11 @@
 package cl.az.sc.api;
-//nnuevo comentario 
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Map;
+
 
 public class RequestApiKaleido {
 	
@@ -29,11 +23,15 @@ public class RequestApiKaleido {
 		return con;
 	}
 	
-	public InputStream ejecutarRequest(HttpURLConnection con) throws IOException {
+	public InputStream ejecutarRequest(HttpURLConnection con) throws IOException {		
 		InputStream stream = con.getInputStream();
-		//con.disconnect();
 		return stream;
-	}	
+	}
+	
+	public int getCodigoEjecucion(HttpURLConnection con) throws IOException{
+		int status = con.getResponseCode();
+		return status;
+	}
 	
 	public HttpURLConnection setBody(HttpURLConnection con, String json) throws IOException {		
 		byte[] outputInBytes = json.getBytes("UTF-8");

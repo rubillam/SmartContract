@@ -16,10 +16,10 @@ import cl.az.sc.api.RequestApiKaleido;
 import cl.az.sc.utils.DatosKaleido;
 
 /**
- * Servlet implementation class ObtenerCompilados
+ * Servlet implementation class ObtenerPromovidos
  */
-@WebServlet("/ObtenerCompilados")
-public class ObtenerCompilados extends HttpServlet {
+@WebServlet("/ObtenerPromovidos")
+public class ObtenerPromovidos extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private DatosKaleido datosk = new DatosKaleido();
@@ -27,7 +27,7 @@ public class ObtenerCompilados extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ObtenerCompilados() {
+	public ObtenerPromovidos() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -38,22 +38,10 @@ public class ObtenerCompilados extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String id_conjunto = request.getParameter("id-conjunto");
-		String id_compilado = request.getParameter("id_compilado");
-		
-		
 		
 		RequestApiKaleido api = new RequestApiKaleido();
 		HttpURLConnection con;
-		if(id_compilado == null) {
-			con = api.getConexionEndpoint(datosk.getUrl() + "/consortia/" + datosk.getConsortia() + "/contracts/"
-					+ id_conjunto + "/compiled_contracts", "GET", 5000, 5000);
-		}else {
-			con = api.getConexionEndpoint(datosk.getUrl() + "/consortia/" + datosk.getConsortia() + "/contracts/"
-					+ id_conjunto + "/compiled_contracts/" + id_compilado, "GET", 5000, 5000);
-		}
-		
+		con = api.getConexionEndpoint(datosk.getUrl() + "/ledger/" + datosk.getConsortia() + "/" + datosk.getEnviroment() + "/gateway_apis", "GET", 5000, 5000);
 		con = api.setHeadersRequest(con, "Authorization", datosk.getAuth_bearer());
 		// con = api.setBody(con, json);
 		InputStream stream = api.ejecutarRequest(con);
@@ -65,7 +53,6 @@ public class ObtenerCompilados extends HttpServlet {
 			content.append(inputLine);
 		}
 		in.close();
-
 		response.getWriter().append(content.toString());
 	}
 

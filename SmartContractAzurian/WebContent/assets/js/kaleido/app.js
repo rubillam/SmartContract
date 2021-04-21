@@ -46,13 +46,43 @@ function obtenerCompilados(id_conjunto){
         if (xhr.readyState == 4) {
             //var data = xhr.responseText;
             var data = JSON.parse(xhr.responseText);
-            append_json_compilado(data);
+            append_json_compilado(data, id_conjunto);
             //alert(data);
         }
     }
     xhr.open('GET', 'ObtenerCompilados?id-conjunto=' + id_conjunto, true);
     xhr.send(null);
     
+    
+}
+
+function obtenerCompilado(id_conjunto, id_compilado, callback){
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', 'ObtenerCompilados?id-conjunto=' + id_conjunto + '&id_compilado=' + id_compilado, true);
+    xhr.send(null); 
+    
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {            
+            returned_data = JSON.parse(xhr.responseText);
+            callback(returned_data);           
+        }
+    }
+      
+    
+}
+
+function obtenerPromovidos(){
+	var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            //var data = xhr.responseText;
+            var data = JSON.parse(xhr.responseText);
+            append_json_promovido(data);
+            //alert(data);
+        }
+    }
+    xhr.open('GET', 'ObtenerPromovidos', true);
+    xhr.send(null);
     
 }
 
@@ -82,6 +112,21 @@ function crearCompilados(){
     return false;
 }
 
+function promoverContrato(contrato_id, contrato_compilado_id, contrato_endpoint){
+	var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            //var data = xhr.responseText;
+            var data = JSON.parse(xhr.responseText);
+            append_json_compilado(data);
+            //alert(data);
+        }
+    }
+    xhr.open('GET', 'PromoverContrato?id_contrato=' + contrato_id + "&id_compilado_contrato=" + contrato_compilado_id +"&endpoint="+ contrato_endpoint);
+    xhr.send(null);
+    return false;
+}
+
 function append_json_conjunto(data){
     var table = document.getElementById('conjuntos-table');
     var i = 1;
@@ -99,7 +144,7 @@ function append_json_conjunto(data){
     });
 }
 
-function append_json_compilado(data){
+function append_json_compilado(data, id_conjunto){
     var table = document.getElementById('conjuntos-table');
     var i = 1;
     data.forEach(function(object) {
@@ -109,11 +154,40 @@ function append_json_compilado(data){
         '<td>' + object.contract_name + '</td>' +        
         '<td>' + object.description + '</td>' +
         '<td>' + object.state + '</td>' +
-        '<td>' + '<button class="btn waves-effect waves-light btn-info btn-outline-info" onclick="verCompilados(\''+ object._id +'\')"><i class="icofont icofont-info-square"></i>Promover</button>' + '</td>';
+        '<td>' + '<button class="btn waves-effect waves-light btn-info btn-outline-info" onclick="promoverContrato(\''+ id_conjunto +'\',\''+ object._id +'\', \''+ object.contract_name +'\')"><i class="icofont icofont-info-square"></i>Promover</button>' + '</td>';
         table.appendChild(tr);
         i = i + 1;
         
     });
+}
+
+
+
+function append_json_promovido(data){    
+    data1 = data.gatewayAPIs;   
+	data1.forEach(function(object) {	
+		console.log(data1);		
+		 obtenerCompilado(object.consortiaContractId, object._id, llenarTablaPromovidos);  		              
+    });    
+}
+
+function llenarTablaPromovidos(data){
+console.log(data);
+		var table = document.getElementById('conjuntos-table');
+	
+		 var i = 1;
+		
+		var tr = document.createElement('tr');
+		tr.innerHTML ='<td>' + i + '</td>' +  
+		'<td>' + data.contract_name + '</td>' +        
+		'<td>' + data.description + '</td>' +
+		'<td>' + data.consortiaContractId + '</td>' +
+		'<td>' + '<button class="btn waves-effect waves-light btn-info btn-outline-info" onclick="verInstancias(\''+ data._id +'\')"><i class="icofont icofont-info-square"></i>Ver Instancias</button>' + '</td>';
+		table.appendChild(tr);
+}
+
+function verInstancias(x){
+	window.location.href = "Instancias.html?id_compilado=" + x;
 }
 
 function verCompilados(x){

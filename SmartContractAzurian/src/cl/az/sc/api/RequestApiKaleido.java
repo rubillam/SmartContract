@@ -1,6 +1,4 @@
 package cl.az.sc.api;
-//nnuevo comentario 
-//nuevo cambio
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,11 +23,15 @@ public class RequestApiKaleido {
 		return con;
 	}
 	
-	public InputStream ejecutarRequest(HttpURLConnection con) throws IOException {
+	public InputStream ejecutarRequest(HttpURLConnection con) throws IOException {		
 		InputStream stream = con.getInputStream();
-		//con.disconnect();
 		return stream;
-	}	
+	}
+	
+	public int getCodigoEjecucion(HttpURLConnection con) throws IOException{
+		int status = con.getResponseCode();
+		return status;
+	}
 	
 	public HttpURLConnection setBody(HttpURLConnection con, String json) throws IOException {		
 		byte[] outputInBytes = json.getBytes("UTF-8");

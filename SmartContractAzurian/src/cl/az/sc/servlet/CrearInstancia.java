@@ -1,9 +1,7 @@
 package cl.az.sc.servlet;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 
 import javax.servlet.ServletException;
@@ -16,10 +14,10 @@ import cl.az.sc.api.RequestApiKaleido;
 import cl.az.sc.utils.DatosKaleido;
 
 /**
- * Servlet implementation class ObtenerConjuntos
+ * Servlet implementation class CrearInstancia
  */
-@WebServlet("/ObtenerConjuntos")
-public class ObtenerConjuntos extends HttpServlet {
+@WebServlet("/CrearInstancia")
+public class CrearInstancia extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private DatosKaleido datosk = new DatosKaleido();
@@ -27,7 +25,7 @@ public class ObtenerConjuntos extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ObtenerConjuntos() {
+    public CrearInstancia() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,22 +35,26 @@ public class ObtenerConjuntos extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String idContrato = request.getParameter("id_contrato");
+		String nombre_instancia = request.getParameter("nombre_instancia");
+		String propiedad1 = request.getParameter("propiedad1");
+		String endpoint = "contrato1";
+
+		String url = "https://" + datosk.getEnviroment() + "-" + datosk.getNodo() + "-" + datosk.getZona() + ".kaleido.io/gateways/" + endpoint + "/?kld-from=" + datosk.getAccount() + "&kld-sync=true&kld-call=false&kld-register=" + nombre_instancia;
+		System.out.println(url);
+		String json = "{\"initVal\": \"" + propiedad1 + "\"}";
+
 		RequestApiKaleido api = new RequestApiKaleido();
 		HttpURLConnection con;
-		con = api.getConexionEndpoint(datosk.getUrl() + "/consortia/" +datosk.getConsortia()+ "/contracts", "GET", 5000, 5000);
-		con = api.setHeadersRequest(con, "Authorization", datosk.getAuth_bearer());
-		//con = api.setBody(con, json);
-		InputStream stream = api.ejecutarRequest(con);
-		
-		BufferedReader in = new BufferedReader(new InputStreamReader(stream));
-		String inputLine;
-		StringBuffer content = new StringBuffer();
-		while ((inputLine = in.readLine()) != null) {
-		    content.append(inputLine);
-		}
-		in.close();
-		
-		response.getWriter().append(content.toString());
+		con = api.getConexionEndpoint(url, "POST",
+				15000, 15000);
+		con = api.setHeadersRequest(con, "Authorization", datosk.getAuth_basic());
+		con = api.setBody(con, json);
+		//InputStream stream = api.ejecutarRequest(con);
+
+		api.getCodigoEjecucion(con);
+		// response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.sendRedirect("Instancias.html?id_compilado=" + idContrato);
 	}
 
 	/**
